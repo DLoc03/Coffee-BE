@@ -23,17 +23,21 @@ let handleUserLogin = (email, password) => {
               (userData.errMessage = "Hợp lệ"),
               delete user.password;
             userData.user = user;
+            userData.statusCode = 200;
           } else {
             userData.errCode = 3;
             userData.errMessage = "Sai mật khẩu!";
+            userData.statusCode = 500;
           }
         } else {
           userData.errCode = 2;
           userData.errMessage = "Thông tin người dùng chưa được đăng ký!";
+          userData.statusCode = 500;
         }
       } else {
         userData.errCode = 1;
         userData.errMessage = "Email chưa đăng ký! Thử lại";
+        userData.statusCode = 500;
       }
       resolve(userData);
     } catch (e) {
