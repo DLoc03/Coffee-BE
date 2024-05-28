@@ -1,6 +1,6 @@
 import db from "../models/index";
 import CRUDService from "../services/CRUD-Service";
-import userService from "../services/user-Service";
+import userService from "../services/userService";
 
 let handleLogin = async (req, res) => {
   let email = req.body.email;
@@ -26,7 +26,7 @@ let handleLogin = async (req, res) => {
 let getAllUser = async (req, res) => {
   let id = req.query.id;
   if (!id) {
-    return res.status(200).json({
+    return res.status(500).json({
       errCode: 1,
       errMessage: "Missing required parameter",
       users: [],

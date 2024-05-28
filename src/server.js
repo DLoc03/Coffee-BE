@@ -20,5 +20,7 @@ connectDB();
 
 let port = process.env.PORT;
 app.listen(port, () => {
-  console.log("Backend NodeJS is running on the port: ", +port);
+  console.log("Backend NodeJS is running on the port: "+port);
 });
+
+module.exports=app;
