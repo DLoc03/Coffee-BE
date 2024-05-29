@@ -1,0 +1,7 @@
+Hướng dẫn chạy unit test:
+Bước 1: Cài đặt các package & thư viện:
+    - Mở ứng dụng trong Visual Studio Code 
+    - Nhấn Ctrl + ` để mở terminal
+    - Nhập "npm i" để cài đặt các package -> Nhấn Enter
+Bước 2: Chạy unit test:
+    - Trong terminal nhập "npm test" hoặc "npm run test" -> Nhấn Enter
