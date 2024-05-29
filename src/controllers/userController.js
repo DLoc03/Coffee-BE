@@ -16,7 +16,7 @@ let handleLogin = async (req, res) => {
   let userData = await userService.handleUserLogin(email, password);
   console.log(userData);
 
-  return res.status(200).json({
+  return res.status(userData.statusCode).json({
     errCode: userData.errCode,
     message: userData.errMessage,
     user: userData.user ? userData.user : {},
@@ -52,7 +52,7 @@ let handleEditUser = async (req, res) => {
 
 let handleDeleteUser = async (req, res) => {
   if (!req.body.id) {
-    return res.status(200).json({
+    return res.status(500).json({
       errCode: 1,
       errMessage: "Missing required parameters",
     });
