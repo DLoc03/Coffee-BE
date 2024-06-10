@@ -21,13 +21,13 @@ let initWebRoutes = (app) => {
   router.post("/api/create-new-user", userController.handleCreateNewUser);
   router.put("/api/edit-user", userController.handleEditUser);
   router.delete("/api/delete-user", userController.handleDeleteUser);
+  router.post("/api/admin-login", userController.handleAdminLogin);
 
   //Stores
   router.get("/api/get-all-store", storeController.handleGetAllStore);
   router.post("/api/create-new-store", storeController.handleCreateNewStore);
   router.put("/api/edit-store", storeController.handleEditStore);
   router.delete("/api/delete-store", storeController.handleDeleteStore);
-
   return app.use("/", router);
 };
 

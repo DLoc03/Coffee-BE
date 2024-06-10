@@ -8,18 +8,19 @@ let getAllStore = (storeID) => {
     try {
       let store = "";
       if (storeID === "ALL") {
-        store = db.Store.findAll({
-          attributes: {
-            exclude: ["userID"],
-          },
-        });
+        store = db.Store.findAll();
+        // store = db.Store.findAll({
+        //   attributes: {
+        //     exclude: ["userID"],
+        //   },
+        // });
       }
       if (storeID && storeID !== "ALL") {
         store = await db.Store.findOne({
           where: { id: storeID },
-          attributes: {
-            exclude: ["userID"],
-          },
+          // attributes: {
+          //   exclude: ["userID"],
+          // },
         });
       }
       resolve(store);
@@ -53,10 +54,22 @@ let createNewStore = (data) => {
       if (check === true) {
         resolve({
           errCode: 1,
-          errMessage: "Store is already!!!",
+          errMessage: "Tên quán đã được đăng ký trước đó. Thử lại!!!",
         });
       }
-      if (check === false) {
+
+      let userId = await db.User.findOne({
+        where: { id: data.userID },
+      });
+
+      if (!userId) {
+        resolve({
+          errCode: 2,
+          errMessage: "ID Chủ quán không tồn tại",
+        });
+      }
+
+      if (check === false && userId) {
         await db.Store.create({
           name: data.name,
           userID: data.userID,
@@ -66,7 +79,7 @@ let createNewStore = (data) => {
       }
       resolve({
         errCode: 0,
-        errMessage: "Done!!!",
+        errMessage: "Xong!!!",
       });
     } catch (e) {
       reject(e);
@@ -80,7 +93,7 @@ let editStore = (data) => {
       if (!data.id) {
         resolve({
           errCode: 2,
-          errMessage: "Missing required parameters",
+          errMessage: "Thiếu id quán",
         });
       }
       let store = await db.Store.findOne({
@@ -94,12 +107,12 @@ let editStore = (data) => {
         await store.save();
         resolve({
           errCode: 0,
-          errMessage: "Store has been updated",
+          errMessage: "Sửa thành công",
         });
       } else {
         resolve({
           errCode: 1,
-          errMessage: "Store not found",
+          errMessage: "Không tìm thấy quán cà phê này",
         });
       }
     } catch (e) {
@@ -117,7 +130,7 @@ let deleteStore = (storeID) => {
       if (!store) {
         resolve({
           errCode: 2,
-          errMessage: "The user isn't exist",
+          errMessage: "Người dùng không tồn tại",
         });
       }
       await db.Store.destroy({
@@ -125,7 +138,7 @@ let deleteStore = (storeID) => {
       });
       resolve({
         errCode: 0,
-        errMessage: "User has been deleted",
+        errMessage: "Xoá quán cà phê thành công",
       });
     } catch (e) {
       reject(e);

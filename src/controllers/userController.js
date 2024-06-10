@@ -1,6 +1,6 @@
 import db from "../models/index";
 import CRUDService from "../services/CRUD-Service";
-import userService from "../services/userService";
+import userService from "../services/user-Service";
 
 let handleLogin = async (req, res) => {
   let email = req.body.email;
@@ -16,7 +16,7 @@ let handleLogin = async (req, res) => {
   let userData = await userService.handleUserLogin(email, password);
   console.log(userData);
 
-  return res.status(userData.statusCode).json({
+  return res.status(200).json({
     errCode: userData.errCode,
     message: userData.errMessage,
     user: userData.user ? userData.user : {},
@@ -26,7 +26,7 @@ let handleLogin = async (req, res) => {
 let getAllUser = async (req, res) => {
   let id = req.query.id;
   if (!id) {
-    return res.status(500).json({
+    return res.status(200).json({
       errCode: 1,
       errMessage: "Missing required parameter",
       users: [],
@@ -42,17 +42,24 @@ let getAllUser = async (req, res) => {
 
 let handleCreateNewUser = async (req, res) => {
   let message = await userService.createNewUser(req.body);
-  return res.status(200).json(message);
+  return res.status(200).json({
+    errCode: message.errCode,
+    errMessage: message.errMessage,
+  });
 };
 
 let handleEditUser = async (req, res) => {
   let data = req.body;
   let message = await userService.updateUser(data);
+  return res.status(200).json({
+    errCode: message.errCode,
+    errMessage: message.errMessage,
+  });
 };
 
 let handleDeleteUser = async (req, res) => {
   if (!req.body.id) {
-    return res.status(500).json({
+    return res.status(200).json({
       errCode: 1,
       errMessage: "Missing required parameters",
     });
@@ -62,10 +69,33 @@ let handleDeleteUser = async (req, res) => {
   return res.status(200).json(message);
 };
 
+let handleAdminLogin = async (req, res) => {
+  let email = req.body.email;
+  let password = req.body.password;
+  let roleId = req.body.roleId;
+
+  if (!email || !password) {
+    return res.status(500).json({
+      errorCode: 1,
+      message: "Email hoặc mật khẩu trống!",
+    });
+  }
+
+  let userData = await userService.handleAdminLogin(email, password);
+  console.log(userData);
+
+  return res.status(200).json({
+    errCode: userData.errCode,
+    message: userData.errMessage,
+    user: userData.user ? userData.user : {},
+  });
+};
+
 module.exports = {
   handleLogin: handleLogin,
   getAllUser: getAllUser,
   handleCreateNewUser: handleCreateNewUser,
   handleEditUser: handleEditUser,
   handleDeleteUser: handleDeleteUser,
+  handleAdminLogin: handleAdminLogin,
 };
