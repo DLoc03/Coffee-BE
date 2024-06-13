@@ -75,6 +75,8 @@ let createNewStore = (data) => {
           userID: data.userID,
           image: data.image,
           url: data.url,
+          telephone: data.telephone,
+          address: data.address,
         });
       }
       resolve({
@@ -104,7 +106,9 @@ let editStore = (data) => {
         store.name = data.name;
         store.image = data.image;
         store.url = data.url;
-        await store.save();
+        (store.telephone = data.telephone),
+          (store.address = data.address),
+          await store.save();
         resolve({
           errCode: 0,
           errMessage: "Sửa thành công",
