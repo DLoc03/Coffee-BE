@@ -250,6 +250,40 @@ let hashUserPassword = async (pwd) => {
     }
   });
 };
+
+let getUserById=(userId)=>{
+  return new Promise(async(resolve,reject)=>{
+    try{
+      if(!userId){
+        resolve({
+          errCode:1,
+          errMessage:"ID không tồn tại"
+        })
+      }else{
+        let userInfor = await db.User.findOne({
+          where:{id:userId},
+          attributes:{
+            exclude:['avatar','password','roleType']
+          },
+          include:[{
+            model:db.Store,
+            attributes:['name']
+          }],
+          raw:true,
+          nest:true
+        })
+        resolve({
+          errCode:0,
+          infor:userInfor,
+        })
+      }
+    }catch(e){
+      reject(e)
+    }
+  })
+}
+
+
 module.exports = {
   hashUserPassword: handleUserLogin,
   handleUserLogin: handleUserLogin,

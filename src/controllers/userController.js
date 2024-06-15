@@ -91,6 +91,19 @@ let handleAdminLogin = async (req, res) => {
   });
 };
 
+let handleGetUserById=async(req,res)=>{
+  try{
+    let infor = await userService.getUserById(req.query.id);
+    return res.status(200).json(infor);
+  }catch(e){
+    console.log(e);
+    return res.status(200).json({
+      errCode:-1,
+      errMessage:"Error from server"
+    });
+  }
+}
+
 module.exports = {
   handleLogin: handleLogin,
   getAllUser: getAllUser,
@@ -98,4 +111,5 @@ module.exports = {
   handleEditUser: handleEditUser,
   handleDeleteUser: handleDeleteUser,
   handleAdminLogin: handleAdminLogin,
+  handleGetUserById:handleGetUserById
 };
