@@ -28,6 +28,8 @@ let initWebRoutes = (app) => {
   router.post("/api/create-new-store", storeController.handleCreateNewStore);
   router.put("/api/edit-store", storeController.handleEditStore);
   router.delete("/api/delete-store", storeController.handleDeleteStore);
+
+  router.get("/api/get-detail-store",storeController.handleGetDetailStoreByID);
   return app.use("/", router);
 };
 

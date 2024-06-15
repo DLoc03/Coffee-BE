@@ -12,7 +12,7 @@ let handleUserLogin = (email, password) => {
       let isExist = await checkUserEmail(email);
       if (isExist) {
         let user = await db.User.findOne({
-          attributes: ["email", "roleID", "password"],
+          attributes: ["email", "roleType", "password"],
           where: { email: email },
           raw: true,
         });
@@ -113,7 +113,7 @@ let createNewUser = (data) => {
         userName: data.userName,
         email: data.email,
         password: hashPwdFromBcrypt,
-        roleID: data.roleID,
+        roleType: data.roleType,
       });
       resolve({
         errCode: 0,
