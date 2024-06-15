@@ -129,7 +129,7 @@ let getAllUser = (userID) => {
     try {
       let users = "";
       if (userID === "ALL") {
-        users = db.User.findAll({
+        users = await db.User.findAll({
           attributes: {
             exclude: ["password"],
           },
