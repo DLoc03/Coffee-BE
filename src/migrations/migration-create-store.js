@@ -16,9 +16,15 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       image: {
-        type: Sequelize.BLOB("long"),
+        type: Sequelize.STRING,
       },
       url: {
+        type: Sequelize.STRING,
+      },
+      telephone: {
+        type: Sequelize.STRING,
+      },
+      address: {
         type: Sequelize.STRING,
       },
       createdAt: {

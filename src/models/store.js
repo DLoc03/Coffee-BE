@@ -9,17 +9,13 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Store.hasOne(models.User,{
-        foreignKey:"id",
-        as:"userData"
-      });
     }
   }
   Store.init(
     {
       name: DataTypes.STRING,
       userID: DataTypes.STRING,
-      image: DataTypes.BLOB("long"),
+      image: DataTypes.STRING,
       url: DataTypes.STRING,
       telephone: DataTypes.STRING,
       address: DataTypes.STRING,

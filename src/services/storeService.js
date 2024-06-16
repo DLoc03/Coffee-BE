@@ -150,44 +150,44 @@ let deleteStore = (storeID) => {
   });
 };
 
-let getDetailStoreByID=(id)=>{
-  return new Promise(async(resolve,reject)=>{
-    try{
-      if(!id){
+let getDetailStoreByID = (id) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (!id) {
         resolve({
-          errCode:1,
-          errMessage:"ID không tồn tại"
-        })
-      }else{
+          errCode: 1,
+          errMessage: "ID không tồn tại",
+        });
+      } else {
         let data = await db.Store.findOne({
-          where:{id:id},
-          attributes:{
-            exclude:['image','url']
+          where: { id: id },
+          attributes: {
+            exclude: ["image", "url"],
           },
-          include:[
+          include: [
             {
-              model:db.User,
-              attributes:['userName']
-            }
+              model: db.User,
+              attributes: ["userName"],
+            },
           ],
-          raw:true,
-          nest:true
-        })
+          raw: true,
+          nest: true,
+        });
         resolve({
-          errCode:0,
-          data:data
-        })
+          errCode: 0,
+          data: data,
+        });
       }
-    }catch(e){
+    } catch (e) {
       reject(e);
     }
-  })
-}
+  });
+};
 
 module.exports = {
   getAllStore: getAllStore,
   createNewStore: createNewStore,
   editStore: editStore,
   deleteStore: deleteStore,
-  getDetailStoreByID:getDetailStoreByID
+  getDetailStoreByID: getAllStore,
 };

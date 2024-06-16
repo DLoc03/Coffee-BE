@@ -1,4 +1,5 @@
 import storeService from "../services/storeService";
+
 let handleGetAllStore = async (req, res) => {
   let id = req.query.id;
   if (!id) {
@@ -47,23 +48,23 @@ let handleDeleteStore = async (req, res) => {
   return res.status(200).json(message);
 };
 
-let handleGetDetailStoreByID = async(req,res)=>{
+let handleGetDetailStoreByID = async (req, res) => {
   try {
     let infor = await storeService.getDetailStoreByID(req.query.id);
-    return res.status(200).json(infor)
+    return res.status(200).json(infor);
   } catch (e) {
     console.log(e);
     return res.status(200).json({
       errCode: -1,
-      errMessage:'Error from server'
-    })
+      errMessage: "Error from server",
+    });
   }
-}
+};
 
 module.exports = {
   handleGetAllStore: handleGetAllStore,
   handleCreateNewStore: handleCreateNewStore,
   handleEditStore: handleEditStore,
   handleDeleteStore: handleDeleteStore,
-  handleGetDetailStoreByID:handleGetDetailStoreByID
+  handleGetDetailStoreByID: handleGetDetailStoreByID,
 };
